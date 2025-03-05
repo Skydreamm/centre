@@ -52,62 +52,31 @@
             font-size: 14px;
             display: none;
         }
-        .image-container {
-            display: none;
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-        }
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .invisible-button {
-            position: absolute;
-            top: 97%; /* Ajustable */
-            left: 12%; /* Ajustable */
-            width: 50px; /* Carré ajustable */
-            height: 50px; /* Carré ajustable */
-            background: rgba(255, 255, 255, 0.3); /* Semi-transparent pour visualisation */
-            border: none;
-            cursor: pointer;
-            transform: translate(-50%, -50%);
-        }
     </style>
 </head>
 <body>
-    <div class="login-container" id="loginContainer">
+    <div class="login-container">
         <h2>Connexion</h2>
         <input type="text" id="username" placeholder="Nom d'utilisateur">
         <input type="password" id="password" placeholder="Mot de passe">
         <p class="error-message" id="error-message">Nom d'utilisateur ou mot de passe incorrect</p>
         <button onclick="checkLogin()">Se connecter</button>
     </div>
-    
-    <div class="image-container" id="imageContainer">
-        <img src="interface.jpg" alt="Connexion réussie">
-        <button class="invisible-button" onclick="redirectToFile()"></button>
-    </div>
-    
+
     <script>
         function checkLogin() {
             let username = document.getElementById("username").value;
             let password = document.getElementById("password").value;
             let errorMessage = document.getElementById("error-message");
-            let loginContainer = document.getElementById("loginContainer");
-            let imageContainer = document.getElementById("imageContainer");
-            
+
             if (username === "admin" && password === "1234") {
-                loginContainer.style.display = "none";
-                imageContainer.style.display = "block";
+                // Redirection vers la page d'accueil après 1 seconde
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 1000);
             } else {
                 errorMessage.style.display = "block";
             }
-        }
-        
-        function redirectToFile() {
-            window.location.href = "fichier.html";
         }
     </script>
 </body>

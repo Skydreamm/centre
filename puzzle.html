@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polypad Tangram</title>
+    <script src="https://static.mathigon.org/api/polypad-en-v5.0.5.js" defer></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        #polypad-container {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="polypad-container"></div>
+    <script>
+        window.addEventListener("load", async function () {
+            try {
+                // Attendre que Polypad soit disponible
+                if (typeof window.Polypad === "undefined") {
+                    console.error("Polypad API non chargée.");
+                    return;
+                }
+                
+                const container = document.getElementById("polypad-container");
+                const polypad = await Polypad.create(container);
+                
+                polypad.setOptions({
+                    showToolbar: false, // Cache la barre d'outils
+                    showMenu: false, // Cache le menu Polypad
+                    showSidebar: false, // Cache la barre latérale
+                    showTopbar: false, // Cache la barre supérieure
+                    showBottomBar: false, // Cache la barre inférieure
+                    showTiles: false, // Cache complètement le panneau des tiles
+                });
+                
+                polypad.setSize(container.clientWidth, container.clientHeight);
+                
+                // Charger uniquement les pièces du Tangram en désordre
+                const tangramData = {
+                    tiles: [
+                        { type: "parallelogram", position: [2, 5], rotation: 0 },
+                        { type: "triangle", position: [4, 3], rotation: 0 },
+                        { type: "square", position: [6, 4], rotation: 0 },
+                        { type: "triangle", position: [5, 2], rotation: 180 },
+                        { type: "triangle", position: [7, 5], rotation: 90 },
+                        { type: "triangle", position: [6, 7], rotation: -45 },
+                        { type: "triangle", position: [4, 7], rotation: 45 }
+                    ]
+                };
+                
+                if (typeof polypad.setState === "function") {
+                    await polypad.setState(tangramData);
+                } else {
+                    console.error("La fonction setState n'est pas disponible sur l'instance Polypad.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de l'initialisation de Polypad:", error);
+            }
+        });
+    </script>
+</body>
+</html>
